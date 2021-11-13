@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <time.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -11,12 +13,29 @@ int *tablica_danych;
 int czy_druga_liczba_jest_bardziej_znaczaca(int pierwsza_liczba, int druga_liczba);
 void wczytanie_danych_wejsciowych(void);
 void zapis_wyniku(void);
+void wygenerowanie_danych_wejsciowych (void);
 
 int main()
 {
-    cout<<"Wczytanie danych wejsciowych: "<<endl;
-    wczytanie_danych_wejsciowych();
-    cout<<endl;
+    clock_t start, stop; //zmienne potrzebne do pomiaru czasu sortowania
+    double czas; //zmienna ktora wyswietli pomiar czasu
+    int wybor; //zmienna ktore bedzie okreslac czy chcemy dzialac na danych wejsciowych z pliku czy na wygenerowanych pseudolosowych liczbach
+    cout<<"Wczytac czy wygenorowac dane wejsciowe?"<<endl;
+    cout<<"1 - wczytac 2 - wygenerowac"<<endl;
+    cin>>wybor;
+
+    if(wybor==1)
+    {
+        cout<<"Wczytanie danych wejsciowych: "<<endl;
+        wczytanie_danych_wejsciowych();
+        cout<<endl;
+    }
+    else
+    {
+        cout<<"Wygenerowanie danych wejsciowych"<<endl;
+        wygenerowanie_danych_wejsciowych();
+        cout<<endl;
+    }
 
     int i;
     int powtorz=1;
@@ -30,9 +49,10 @@ int main()
 
     cout<<endl;
 
-	/* Wykonuje sortowanie do momentu kiedy ¿adna z s¹siaduj¹cych ze sob¹ liczb w tablic danych
-	 nie bêdzie wymaga³a zamiany miejsca w tablicy */
+    start=clock(); //Poczatek mierzenia czasu wykonywania algorytmu
 
+	/* Wykonuje sortowanie do momentu kiedy Å¼adna z sÄ…siadujÄ…cych ze sobÄ… liczb w tablic danych
+	 nie bÄ™dzie wymagaÅ‚a zamiany miejsca w tablicy */
     while(powtorz==1)
     {
         powtorz=0;
@@ -53,15 +73,19 @@ int main()
 
     }
 
+    stop=clock(); //Koniec mierzenia czasu wykonywania algorytmu;
+    czas=(double)(stop-start)/CLOCKS_PER_SEC; //Obliczenie czasu wykonywania sie algorytmu
+
     cout<<endl<<"KONIEC SORTOWANIA"<<endl;
 
         for(i=0;i<ROZMIAR_TABLICY;i++)
         {
             cout<<tablica_danych[i];
-
         }
 
     cout<<endl;
+
+    cout<<"Czas wykonania algorytmu: "<<czas<<endl;
 
 	// zapisz wynik do pliku tekstowego
     zapis_wyniku();
@@ -238,3 +262,26 @@ void zapis_wyniku(void)
     zapis_wyniku.close(); //Zamknij plik
 }
 
+
+
+/*
+Funkcja ma za zadanie generowanie liczb losowych do tablicy,
+ktore beda sluzycy do pomiaru czasu wykonywania algorytmu,
+a nastepnie przedstawienia jego zlozonosci obliczeniowej
+*/
+void wygenerowanie_danych_wejsciowych (void)
+{
+    int ilosc_liczb=0;
+    int i;
+    cout<<"Ile liczb wygenerowac do tablicy danych"<<endl;
+    cin>>ilosc_liczb;
+    ROZMIAR_TABLICY=ilosc_liczb;
+    tablica_danych=new int[ROZMIAR_TABLICY];
+    srand(time(NULL));
+
+    for(i=0;i<ROZMIAR_TABLICY;i++)
+    {
+        tablica_danych[i]=rand()%100+1; //generowanie liczb z zakresu od 0 do 100 do tablicy
+    }
+
+}
