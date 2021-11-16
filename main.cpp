@@ -105,8 +105,8 @@ int main()
 int czy_druga_liczba_jest_bardziej_znaczaca(int pierwsza_liczba, int druga_liczba)
 {
 
-    // Zmienna okresla czy druga liczba jest bardziej znaczaca, czy liczba z kombinacji
-    // drugiej jest wieksza od liczby z kombinacji pierwszej, jest to zmienna zwraca przez funkcje
+    /* Zmienna okresla czy druga liczba jest bardziej znaczaca, czy liczba z kombinacji
+     drugiej jest wieksza od liczby z kombinacji pierwszej, jest to zmienna zwraca przez funkcje*/
     int druga_liczba_jest_bardziej_znaczaca=0;
 
     //Wyswietla mozliwe kombinacje
